@@ -1,78 +1,101 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonVirtualScroll, IonInfiniteScroll, IonRefresher } from '@ionic/angular';
-import { Observable } from 'rxjs';
-import { tap, finalize } from 'rxjs/operators';
+import { Component, Injector, ViewChild } from '@angular/core';
+import { IonSearchbar } from '@ionic/angular';
 
+import { BasePage } from 'src/app/shared/pages/base/base.page';
 import { ChannelService } from './shared/services/channel.service';
-import {
-  LoadingWrapperService,
-  LoadingStatus
-} from 'src/app/shared/services/loading-wrapper.service';
+import { SortComponent } from 'src/app/shared/components/sort/sort.component';
 
 @Component({
   selector: 'app-channels',
   templateUrl: './channels.page.html',
   styleUrls: ['./channels.page.scss']
 })
-export class ChannelsPage implements OnInit {
-  @ViewChild(IonVirtualScroll) virtualScroll: IonVirtualScroll;
-  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-  @ViewChild(IonRefresher) refresher: IonRefresher;
+export class ChannelsPage extends BasePage {
+  @ViewChild(IonSearchbar) searchbar: IonSearchbar;
 
-  params: any = {
-    page: 1
-  };
+  params: any = {};
   channels: ChannelService[];
-  loading$: Observable<LoadingWrapperService<any>>;
-  refreshing: boolean;
+  showSearch: boolean = false;
+  fields: any[] = [
+    {
+      name: 'name',
+      label: 'Name'
+    },
+    {
+      name: 'updatedAt',
+      label: 'Date Modified'
+    }
+  ];
+  field: string = 'name';
+  direction: string = '';
 
-  LoadingStatus: typeof LoadingStatus = LoadingStatus;
-
-  constructor(private channel: ChannelService) {}
-
-  ngOnInit() {
-    this.load();
+  constructor(public injector: Injector, private channel: ChannelService) {
+    super(injector);
   }
 
-  onReload(event: Event) {
-    this.refreshing = true;
-    this.params = {
-      page: 1
-    };
-    this.load();
+  async ngOnInit() {
+    await this.showLoadingView('Loading...');
+    this.onReload();
+  }
+
+  onReload(event?: Event) {
+    this.refresher = event && event.target;
+
+    this.params.sortBy = `${this.direction}${this.field}`;
+    this.params.page = 1;
+    this.channels = [];
+
+    this.loadData();
+  }
+
+  async loadData() {
+    try {
+      const data = await this.channel.load(this.params);
+      this.channels = this.channels.concat(data);
+      this.onRefreshComplete(data);
+      if (this.channels.length) {
+        this.showContentView();
+      } else {
+        this.showEmptyView();
+      }
+    } catch (error) {
+      this.onRefreshComplete();
+      this.showErrorView();
+    }
+  }
+
+  focusSearch() {
+    setTimeout(() => {
+      this.searchbar.setFocus();
+    }, 500);
+  }
+
+  async onSearch() {
+    await this.showLoadingView('Searching...');
+    this.onReload();
+    this.focusSearch();
+  }
+
+  onSearchClear() {
+    this.params.search = '';
+    this.ngOnInit();
+    this.focusSearch();
+  }
+
+  async onSort(event: Event) {
+    const { field, direction } = await this.showPopover(event, SortComponent, {
+      fields: this.fields,
+      field: this.field,
+      direction: this.direction
+    });
+    this.field = field;
+    this.direction = direction;
+    this.ngOnInit();
   }
 
   onLoadMore(event: Event) {
-    this.refreshing = true;
+    this.infiniteScroll = event.target;
     this.params.page++;
-    this.channel.load(this.params).subscribe(data => {
-      this.channels = this.channels.concat(data);
-      this.infiniteScroll.complete();
-      if (data && data.length > 0) {
-        this.infiniteScroll.disabled = false;
-      } else {
-        this.infiniteScroll.disabled = true;
-      }
-      this.virtualScroll.checkEnd();
-    });
-  }
-
-  load() {
-    this.loading$ = LoadingWrapperService.wrap(this.channel.load(this.params)).pipe(
-      tap(loading => {
-        if (loading.status === LoadingStatus.LOADING) {
-          this.refresher.disabled = true;
-        } else if (loading.status === LoadingStatus.SUCCESS) {
-          this.channels = loading.data;
-          this.refresher.disabled = false;
-        } else {
-          this.refresher.disabled = false;
-        }
-      }),
-      finalize(() => {
-        this.refresher.complete();
-        this.refreshing = false;
-      })
-    );
+    this.loadData();
   }
 }
