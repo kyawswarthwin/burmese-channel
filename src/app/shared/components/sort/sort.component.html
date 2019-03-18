@@ -1,3 +1,20 @@
-<p>
-  sort works!
-</p>
+<ion-list>
+  <ion-list-header>Sort By</ion-list-header>
+  <ion-radio-group [(ngModel)]="field">
+    <ion-item lines="none" *ngFor="let field of fields" (click)="close()">
+      <ion-label>{{ field.label }}</ion-label>
+      <ion-radio [value]="field.name"></ion-radio>
+    </ion-item>
+  </ion-radio-group>
+  <hr class="divider">
+  <ion-radio-group [(ngModel)]="direction">
+    <ion-item lines="none" (click)="close()">
+      <ion-label>Ascending</ion-label>
+      <ion-radio value=""></ion-radio>
+    </ion-item>
+    <ion-item lines="none" (click)="close()">
+      <ion-label>Descending</ion-label>
+      <ion-radio value="-"></ion-radio>
+    </ion-item>
+  </ion-radio-group>
+</ion-list>
