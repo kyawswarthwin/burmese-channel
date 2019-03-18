@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, from } from 'rxjs';
 import * as Parse from 'parse';
 
 @Injectable({
@@ -11,7 +12,7 @@ export class ChannelService extends Parse.Object {
     super('Channel');
   }
 
-  load(params: any = {}): Promise<ChannelService[]> {
+  load(params: any = {}): Observable<ChannelService[]> {
     const { search, sortBy, page, limit = 25 } = params;
     let query = new Parse.Query(ChannelService);
     // Search
@@ -36,7 +37,7 @@ export class ChannelService extends Parse.Object {
       query.skip((page - 1) * limit);
       query.limit(limit);
     }
-    return query.find();
+    return from(query.find());
   }
 
   get name(): string {

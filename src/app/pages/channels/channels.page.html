@@ -5,5 +5,23 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-refresher slot="fixed" (ionRefresh)="onReload($event)">
+    <ion-refresher-content refreshingSpinner="crescent"></ion-refresher-content>
+  </ion-refresher>
+  <ng-container *ngIf="loading$ | async as loading" [ngSwitch]="loading.status">
+    <ng-container *ngSwitchCase="LoadingStatus.SUCCESS">
+      <ion-virtual-scroll [items]="loading.data">
+        <ion-item *virtualItem="let channel" button [routerLink]="['/channels',
+          channel.id]">
+          <ion-label>{{ channel.name }}</ion-label>
+        </ion-item>
+      </ion-virtual-scroll>
+    </ng-container>
+    <ng-container *ngSwitchCase="LoadingStatus.ERROR">
+      <app-message-view icon="wifi" message="No Connection Available"></app-message-view>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+      <app-loading-view *ngIf="!refreshing" message="Loading..."></app-loading-view>
+    </ng-container>
+  </ng-container>
 </ion-content>
