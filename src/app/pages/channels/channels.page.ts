@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonVirtualScroll, IonRefresher } from '@ionic/angular';
+import { IonVirtualScroll, IonInfiniteScroll, IonRefresher } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { tap, finalize } from 'rxjs/operators';
 
@@ -16,8 +16,13 @@ import {
 })
 export class ChannelsPage implements OnInit {
   @ViewChild(IonVirtualScroll) virtualScroll: IonVirtualScroll;
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonRefresher) refresher: IonRefresher;
 
+  params: any = {
+    page: 1
+  };
+  channels: ChannelService[];
   loading$: Observable<LoadingWrapperService<any>>;
   refreshing: boolean;
 
@@ -31,14 +36,35 @@ export class ChannelsPage implements OnInit {
 
   onReload(event: Event) {
     this.refreshing = true;
+    this.params = {
+      page: 1
+    };
     this.load();
+    this.infiniteScroll.disabled = false;
+  }
+
+  onLoadMore(event: Event) {
+    this.refreshing = true;
+    this.params.page++;
+    this.channel.load(this.params).subscribe(data => {
+      if (data && data.length > 0) {
+        this.channels = this.channels.concat(data);
+        this.infiniteScroll.disabled = false;
+      } else {
+        this.infiniteScroll.disabled = true;
+      }
+      this.infiniteScroll.complete();
+    });
   }
 
   load() {
-    this.loading$ = LoadingWrapperService.wrap(this.channel.load()).pipe(
+    this.loading$ = LoadingWrapperService.wrap(this.channel.load(this.params)).pipe(
       tap(loading => {
         if (loading.status === LoadingStatus.LOADING) {
           this.refresher.disabled = true;
+        } else if (loading.status === LoadingStatus.SUCCESS) {
+          this.channels = loading.data;
+          this.refresher.disabled = false;
         } else {
           this.refresher.disabled = false;
         }

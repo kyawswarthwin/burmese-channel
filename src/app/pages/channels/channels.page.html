@@ -10,12 +10,15 @@
   </ion-refresher>
   <ng-container *ngIf="loading$ | async as loading" [ngSwitch]="loading.status">
     <ng-container *ngSwitchCase="LoadingStatus.SUCCESS">
-      <ion-virtual-scroll [items]="loading.data">
+      <ion-virtual-scroll [items]="channels">
         <ion-item *virtualItem="let channel" button [routerLink]="['/channels',
           channel.id]">
           <ion-label>{{ channel.name }}</ion-label>
         </ion-item>
       </ion-virtual-scroll>
+      <ion-infinite-scroll threshold="100px" (ionInfinite)="onLoadMore($event)">
+        <ion-infinite-scroll-content loadingSpinner="crescent"></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
     </ng-container>
     <ng-container *ngSwitchCase="LoadingStatus.ERROR">
       <app-message-view icon="wifi" message="No Connection Available"></app-message-view>
