@@ -29,6 +29,16 @@
     .vjs-volume-level {
       background-color: var(--ion-color-primary);
     }
+    .vjs-big-play-button {
+      left: 50%;
+      top: 50%;
+      width: 2em;
+      height: 2em;
+      margin-left: -1em;
+      margin-top: -1em;
+      border-radius: 50%;
+      line-height: 2em;
+    }
   }
   .vjs-has-started.vjs-paused .vjs-big-play-button {
     display: block;
