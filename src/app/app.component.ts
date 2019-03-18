@@ -36,7 +36,7 @@ export class AppComponent {
       this.splashScreen.hide();
     });
     this.platform.backButton.subscribe(() => {
-      if (this.router.isActive('/live', true)) {
+      if (this.router.isActive('/channels', true)) {
         navigator['app'].exitApp();
       }
     });

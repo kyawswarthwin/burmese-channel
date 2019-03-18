@@ -3,12 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'live',
-    loadChildren: './pages/live/live.module#LivePageModule'
+    path: 'channels',
+    loadChildren: './pages/channels/channels.module#ChannelsPageModule'
   },
   {
     path: '',
-    redirectTo: '/live',
+    redirectTo: '/channels',
     pathMatch: 'full'
   }
 ];
