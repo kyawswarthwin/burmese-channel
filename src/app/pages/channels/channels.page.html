@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title *ngIf="!showSearch">Burmese Channel</ion-title>
-    <ion-searchbar *ngIf="showSearch" #search [(ngModel)]="params.search"
+    <ion-searchbar *ngIf="showSearch" [(ngModel)]="params.search"
       showCancelButton (ionCancel)="showSearch=false"
       (ionClear)="onSearchClear()" (keyup.enter)="onSearch()"></ion-searchbar>
     <ion-buttons *ngIf="!showSearch" slot="end">
