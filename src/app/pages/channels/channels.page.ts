@@ -2,7 +2,7 @@ import { Component, Injector, ViewChild } from '@angular/core';
 import { IonSearchbar } from '@ionic/angular';
 
 import { BasePage } from 'src/app/shared/pages/base/base.page';
-import { ChannelService } from './shared/services/channel.service';
+import { ChannelService as Channel } from './shared/services/channel.service';
 import { SortComponent } from 'src/app/shared/components/sort/sort.component';
 
 @Component({
@@ -14,7 +14,7 @@ export class ChannelsPage extends BasePage {
   @ViewChild(IonSearchbar) searchbar: IonSearchbar;
 
   params: any = {};
-  channels: ChannelService[];
+  channels: Channel[];
   showSearchbar: boolean = false;
   fields: any[] = [
     {
@@ -29,7 +29,7 @@ export class ChannelsPage extends BasePage {
   field: string = 'name';
   direction: string = '';
 
-  constructor(public injector: Injector, private channel: ChannelService) {
+  constructor(public injector: Injector, private channel: Channel) {
     super(injector);
   }
 
@@ -40,11 +40,9 @@ export class ChannelsPage extends BasePage {
 
   onReload(event?: Event) {
     this.refresher = event && event.target;
-
     this.params.sortBy = `${this.direction}${this.field}`;
     this.params.page = 1;
     this.channels = [];
-
     this.loadData();
   }
 
