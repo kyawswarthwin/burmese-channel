@@ -1,3 +1,15 @@
-<p>
-  channel-detail works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/channels"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ channel.name || 'Error' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-message-view *ngIf="isErrorView" icon="wifi" message="No Connection
+    Available"></app-message-view>
+  <app-message-view *ngIf="isEmptyView" icon="sad" message="No Data Found"></app-message-view>
+  <app-video *ngIf="isContentView" [src]="channel.url" autoplay></app-video>
+</ion-content>
