@@ -15,7 +15,7 @@ export class ChannelsPage extends BasePage {
 
   params: any = {};
   channels: ChannelService[];
-  showSearch: boolean = false;
+  showSearchbar: boolean = false;
   fields: any[] = [
     {
       name: 'name',
@@ -64,7 +64,7 @@ export class ChannelsPage extends BasePage {
     }
   }
 
-  focusSearch() {
+  focusSearchbar() {
     setTimeout(() => {
       this.searchbar.setFocus();
     }, 500);
@@ -73,13 +73,13 @@ export class ChannelsPage extends BasePage {
   async onSearch() {
     await this.showLoadingView('Searching...');
     this.onReload();
-    this.focusSearch();
+    this.focusSearchbar();
   }
 
-  onSearchClear() {
+  onClearSearch() {
     this.params.search = '';
     this.ngOnInit();
-    this.focusSearch();
+    this.focusSearchbar();
   }
 
   async onSort(event: Event) {

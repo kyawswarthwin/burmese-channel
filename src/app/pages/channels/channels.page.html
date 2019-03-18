@@ -1,17 +1,20 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title *ngIf="!showSearch">Burmese Channel</ion-title>
-    <ion-searchbar *ngIf="showSearch" [(ngModel)]="params.search"
-      showCancelButton (ionCancel)="showSearch=false"
-      (ionClear)="onSearchClear()" (keyup.enter)="onSearch()"></ion-searchbar>
-    <ion-buttons *ngIf="!showSearch" slot="end">
-      <ion-button (click)="(showSearch=!showSearch) && focusSearch()">
-        <ion-icon slot="icon-only" name="search"></ion-icon>
-      </ion-button>
-      <ion-button (click)="onSort($event)">
-        <ion-icon slot="icon-only" name="funnel"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ng-container *ngIf="!showSearchbar">
+      <ion-title>Burmese Channel</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="(showSearchbar=!showSearchbar) &&
+          focusSearchbar()">
+          <ion-icon slot="icon-only" name="search"></ion-icon>
+        </ion-button>
+        <ion-button (click)="onSort($event)">
+          <ion-icon slot="icon-only" name="funnel"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ng-container>
+    <ion-searchbar *ngIf="showSearchbar" [(ngModel)]="params.search"
+      showCancelButton (ionCancel)="showSearchbar=false"
+      (ionClear)="onClearSearch()" (keyup.enter)="onSearch()"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
@@ -22,14 +25,15 @@
   <app-message-view *ngIf="isErrorView" icon="wifi" message="No Connection
     Available"></app-message-view>
   <app-message-view *ngIf="isEmptyView" icon="sad" message="No Data Found"></app-message-view>
-  <ion-list *ngIf="isContentView">
-    <ion-item button *ngFor="let channel of channels"
-      [routerLink]="['/channels', channel.id]">
-      <ion-label>{{ channel.name }}</ion-label>
-    </ion-item>
-  </ion-list>
-  <ion-infinite-scroll *ngIf="isContentView" threshold="100px"
-    (ionInfinite)="onLoadMore($event)">
-    <ion-infinite-scroll-content loadingSpinner="crescent"></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+  <ng-container *ngIf="isContentView">
+    <ion-list>
+      <ion-item button *ngFor="let channel of channels"
+        [routerLink]="['/channels', channel.id]">
+        <ion-label>{{ channel.name }}</ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="onLoadMore($event)">
+      <ion-infinite-scroll-content loadingSpinner="crescent"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ng-container>
 </ion-content>
