@@ -40,7 +40,6 @@ export class ChannelsPage implements OnInit {
       page: 1
     };
     this.load();
-    this.infiniteScroll.disabled = false;
   }
 
   onLoadMore(event: Event) {
