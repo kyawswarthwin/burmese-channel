@@ -1,0 +1,7 @@
+{
+  "name": "Burmese Channel",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
