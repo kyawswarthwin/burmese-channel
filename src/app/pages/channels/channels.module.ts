@@ -6,11 +6,17 @@ import { IonicModule } from '@ionic/angular';
 
 import { ChannelsPage } from './channels.page';
 import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
+import { SortComponent } from 'src/app/shared/components/sort/sort.component';
+import { ChannelDetailComponent } from './shared/components/channel-detail/channel-detail.component';
 
 const routes: Routes = [
   {
     path: '',
     component: ChannelsPage
+  },
+  {
+    path: ':id',
+    component: ChannelDetailComponent
   }
 ];
 
@@ -22,6 +28,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     SharedComponentsModule
   ],
-  declarations: [ChannelsPage]
+  declarations: [ChannelsPage, ChannelDetailComponent],
+  entryComponents: [SortComponent]
 })
 export class ChannelsPageModule {}
