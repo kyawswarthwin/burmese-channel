@@ -47,13 +47,14 @@ export class ChannelsPage implements OnInit {
     this.refreshing = true;
     this.params.page++;
     this.channel.load(this.params).subscribe(data => {
+      this.channels = this.channels.concat(data);
+      this.infiniteScroll.complete();
       if (data && data.length > 0) {
-        this.channels = this.channels.concat(data);
         this.infiniteScroll.disabled = false;
       } else {
         this.infiniteScroll.disabled = true;
       }
-      this.infiniteScroll.complete();
+      this.virtualScroll.checkEnd();
     });
   }
 
