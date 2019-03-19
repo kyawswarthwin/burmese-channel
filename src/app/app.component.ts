@@ -29,7 +29,7 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.backgroundColorByHexString('#455a64');
+      this.statusBar.backgroundColorByHexString('#d32f2f');
       this.appUpdate.checkAppUpdate(environment.updateUrl);
       this.parse.initialize(environment.parseConfig);
       this.ad.showBanner();
