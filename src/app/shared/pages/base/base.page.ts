@@ -1,5 +1,5 @@
 import { Injector, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import {
   LoadingController,
   AlertController,
@@ -13,6 +13,7 @@ export abstract class BasePage implements OnInit, OnDestroy {
   public isContentView: boolean;
   public isErrorView: boolean;
 
+  protected router: Router;
   protected route: ActivatedRoute;
   protected refresher: any;
   protected infiniteScroll: any;
@@ -24,6 +25,7 @@ export abstract class BasePage implements OnInit, OnDestroy {
   private popoverCtrl: PopoverController;
 
   constructor(public injector: Injector) {
+    this.router = injector.get(Router);
     this.route = injector.get(ActivatedRoute);
     this.loadingCtrl = injector.get(LoadingController);
     this.alertCtrl = injector.get(AlertController);
