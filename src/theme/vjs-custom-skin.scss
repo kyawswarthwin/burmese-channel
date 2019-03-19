@@ -39,6 +39,9 @@
     .vjs-volume-level {
       background-color: var(--ion-color-primary);
     }
+    .vjs-loading-spinner {
+      border-color: var(--ion-color-primary);
+    }
   }
   .vjs-has-started.vjs-paused .vjs-big-play-button {
     display: block;
