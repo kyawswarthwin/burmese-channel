@@ -1,6 +1,7 @@
 import { Component, AfterViewInit, OnDestroy, ViewChild, ElementRef, Input } from '@angular/core';
 
 import videojs from 'video.js';
+import 'videojs-flash';
 import 'videojs-playlist';
 
 @Component({
@@ -36,7 +37,11 @@ export class VideoComponent implements AfterViewInit, OnDestroy {
   constructor() {}
 
   ngAfterViewInit() {
-    this.player = videojs(this.video.nativeElement);
+    this.player = videojs(this.video.nativeElement, {
+      flash: {
+        swf: 'assets/swf/video-js.swf'
+      }
+    });
     if (this.playlist) {
       this.player.playlist(this.playlist);
       this.player.playlist.autoadvance(0);
