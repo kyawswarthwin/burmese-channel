@@ -39,6 +39,11 @@ export class VideoComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.player = videojs(this.video.nativeElement, {
+      html5: {
+        hls: {
+          overrideNative: true
+        }
+      },
       flash: {
         swf: 'assets/swf/video-js.swf'
       }
