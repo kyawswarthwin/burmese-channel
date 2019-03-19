@@ -32,10 +32,10 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.backgroundColorByHexString('#d32f2f');
+      this.insomnia.keepAwake();
       this.appUpdate.checkAppUpdate(environment.updateUrl);
       this.parse.initialize(environment.parseConfig);
       this.ad.showBanner();
-      this.insomnia.keepAwake();
       this.splashScreen.hide();
     });
     this.platform.backButton.subscribe(() => {
