@@ -4,6 +4,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppUpdate } from '@ionic-native/app-update/ngx';
+import { Insomnia } from '@ionic-native/insomnia/ngx';
 
 import { environment } from 'src/environments/environment';
 import { ParseService } from './shared/services/parse.service';
@@ -21,6 +22,7 @@ export class AppComponent {
     private statusBar: StatusBar,
     private router: Router,
     private appUpdate: AppUpdate,
+    private insomnia: Insomnia,
     private parse: ParseService,
     private ad: AdService
   ) {
@@ -33,6 +35,7 @@ export class AppComponent {
       this.appUpdate.checkAppUpdate(environment.updateUrl);
       this.parse.initialize(environment.parseConfig);
       this.ad.showBanner();
+      this.insomnia.keepAwake();
       this.splashScreen.hide();
     });
     this.platform.backButton.subscribe(() => {
