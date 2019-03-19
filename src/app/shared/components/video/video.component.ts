@@ -1,5 +1,6 @@
 import { Component, AfterViewInit, OnDestroy, ViewChild, ElementRef, Input } from '@angular/core';
-
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { AdMobFree } from '@ionic-native/admob-free/ngx';
 import videojs from 'video.js';
 import 'videojs-flash';
 import 'videojs-playlist';
@@ -34,7 +35,7 @@ export class VideoComponent implements AfterViewInit, OnDestroy {
 
   player: any;
 
-  constructor() {}
+  constructor(private statusBar: StatusBar, private adMobFree: AdMobFree) {}
 
   ngAfterViewInit() {
     this.player = videojs(this.video.nativeElement, {
@@ -85,6 +86,15 @@ export class VideoComponent implements AfterViewInit, OnDestroy {
     }
     this.player.autoplay(this.autoplay);
     this.player.fluid(this.fluid);
+    this.player.on('fullscreenchange', event => {
+      if (this.player.isFullscreen()) {
+        this.statusBar.hide();
+        this.adMobFree.banner.hide();
+      } else {
+        this.statusBar.show();
+        this.adMobFree.banner.show();
+      }
+    });
   }
 
   ngOnDestroy() {
