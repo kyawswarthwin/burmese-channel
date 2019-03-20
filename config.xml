@@ -89,6 +89,7 @@
         <variable name="ADMOB_APP_ID" value="ca-app-pub-9704013464677272~2320032421" />
     </plugin>
     <plugin name="cordova-plugin-fullscreen" spec="1.2.0" />
+    <plugin name="cordova-plugin-screen-orientation" spec="3.0.1" />
     <plugin name="cordova-plugin-insomnia" spec="4.3.0" />
     <engine name="android" spec="7.1.4" />
 </widget>

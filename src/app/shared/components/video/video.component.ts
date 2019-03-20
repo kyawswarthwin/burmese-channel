@@ -1,5 +1,6 @@
 import { Component, AfterViewInit, OnDestroy, ViewChild, ElementRef, Input } from '@angular/core';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { AdMobFree } from '@ionic-native/admob-free/ngx';
 import videojs from 'video.js';
 import 'videojs-flash';
@@ -35,7 +36,11 @@ export class VideoComponent implements AfterViewInit, OnDestroy {
 
   player: any;
 
-  constructor(private androidFullScreen: AndroidFullScreen, private adMobFree: AdMobFree) {}
+  constructor(
+    private androidFullScreen: AndroidFullScreen,
+    private screenOrientation: ScreenOrientation,
+    private adMobFree: AdMobFree
+  ) {}
 
   ngAfterViewInit() {
     this.player = videojs(this.video.nativeElement, {
@@ -94,9 +99,11 @@ export class VideoComponent implements AfterViewInit, OnDestroy {
     this.player.on('fullscreenchange', event => {
       if (this.player.isFullscreen()) {
         this.androidFullScreen.immersiveMode();
+        this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
         this.adMobFree.banner.hide();
       } else {
         this.androidFullScreen.showSystemUI();
+        this.screenOrientation.unlock();
         this.adMobFree.banner.show();
       }
     });
