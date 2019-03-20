@@ -85,6 +85,13 @@
   --ion-toolbar-color-unchecked: rgba(255, 255, 255, 0.6);
   --ion-toolbar-color-checked: #fff;
 
+  ion-toolbar {
+    ion-button,
+    ion-back-button {
+      --color: #fff;
+    }
+  }
+
   ion-spinner,
   ion-refresher-content {
     --color: var(--ion-color-primary);
