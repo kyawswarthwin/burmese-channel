@@ -67,6 +67,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 @ionic-native/admob-free
 MIT
 
+@ionic-native/android-full-screen
+MIT
+
 @ionic-native/app-update
 MIT
 
