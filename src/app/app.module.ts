@@ -5,7 +5,6 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppUpdate } from '@ionic-native/app-update/ngx';
-import { AdMobFree } from '@ionic-native/admob-free/ngx';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Insomnia } from '@ionic-native/insomnia/ngx';
@@ -20,7 +19,6 @@ import { AppRoutingModule } from './app-routing.module';
     SplashScreen,
     StatusBar,
     AppUpdate,
-    AdMobFree,
     AndroidFullScreen,
     ScreenOrientation,
     Insomnia,

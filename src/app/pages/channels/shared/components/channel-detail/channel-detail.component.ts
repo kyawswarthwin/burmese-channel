@@ -2,7 +2,6 @@ import { Component, Injector } from '@angular/core';
 
 import { BasePage } from 'src/app/shared/pages/base/base.page';
 import { ChannelService as Channel } from '../../services/channel.service';
-import { AdService } from 'src/app/shared/services/ad.service';
 
 @Component({
   selector: 'app-channel-detail',
@@ -12,7 +11,7 @@ import { AdService } from 'src/app/shared/services/ad.service';
 export class ChannelDetailComponent extends BasePage {
   channel: Channel;
 
-  constructor(public injector: Injector, private ad: AdService) {
+  constructor(public injector: Injector) {
     super(injector);
 
     this.channel = new Channel();
@@ -21,7 +20,6 @@ export class ChannelDetailComponent extends BasePage {
 
   async ngOnInit() {
     try {
-      this.ad.showInterstitial();
       await this.showLoadingView('Loading...');
       await this.channel.fetch();
       this.showContentView();

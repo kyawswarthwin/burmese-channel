@@ -8,7 +8,6 @@ import { Insomnia } from '@ionic-native/insomnia/ngx';
 
 import { environment } from 'src/environments/environment';
 import { ParseService } from './shared/services/parse.service';
-import { AdService } from './shared/services/ad.service';
 
 @Component({
   selector: 'app-root',
@@ -23,8 +22,7 @@ export class AppComponent {
     private router: Router,
     private appUpdate: AppUpdate,
     private insomnia: Insomnia,
-    private parse: ParseService,
-    private ad: AdService
+    private parse: ParseService
   ) {
     this.initializeApp();
   }
@@ -35,7 +33,6 @@ export class AppComponent {
       this.insomnia.keepAwake();
       this.appUpdate.checkAppUpdate(environment.updateUrl);
       this.parse.initialize(environment.parseConfig);
-      this.ad.showBanner();
       this.splashScreen.hide();
     });
     this.platform.backButton.subscribe(() => {

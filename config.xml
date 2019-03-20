@@ -85,9 +85,6 @@
     <plugin name="cordova-plugin-ionic-webview" spec="^3.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-plugin-app-update" spec="2.0.2" />
-    <plugin name="cordova-plugin-admob-free" spec="0.25.0">
-        <variable name="ADMOB_APP_ID" value="ca-app-pub-9704013464677272~2320032421" />
-    </plugin>
     <plugin name="cordova-plugin-fullscreen" spec="1.2.0" />
     <plugin name="cordova-plugin-screen-orientation" spec="3.0.1" />
     <plugin name="cordova-plugin-insomnia" spec="4.3.0" />
