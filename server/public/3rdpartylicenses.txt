@@ -73,6 +73,9 @@ MIT
 @ionic-native/core
 MIT
 
+@ionic-native/insomnia
+MIT
+
 @ionic-native/splash-screen
 MIT
 
