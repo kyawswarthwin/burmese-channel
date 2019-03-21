@@ -12,11 +12,15 @@ export class CountryGuard implements CanActivate {
 
   async canActivate(): Promise<boolean> {
     if (environment.production) {
-      const countrySupported = await Parse.Cloud.run('isCountrySupported');
-      if (!countrySupported) {
-        this.router.navigate(['/forbidden']);
+      try {
+        const countrySupported = await Parse.Cloud.run('isCountrySupported');
+        if (!countrySupported) {
+          this.router.navigate(['/forbidden']);
+        }
+        return countrySupported;
+      } catch (error) {
+        navigator['app'].exitApp();
       }
-      return countrySupported;
     } else {
       return true;
     }

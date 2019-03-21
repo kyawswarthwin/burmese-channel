@@ -10,13 +10,13 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'forbidden',
-    loadChildren: './pages/forbidden/forbidden.module#ForbiddenPageModule'
-  },
-  {
     path: 'channels',
     loadChildren: './pages/channels/channels.module#ChannelsPageModule',
     canActivate: [CountryGuard]
+  },
+  {
+    path: 'forbidden',
+    loadChildren: './pages/forbidden/forbidden.module#ForbiddenPageModule'
   }
 ];
 

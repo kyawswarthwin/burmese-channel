@@ -33,7 +33,7 @@ export class AppComponent {
       this.splashScreen.hide();
     });
     this.platform.backButton.subscribe(() => {
-      if (this.router.isActive('/channels', true)) {
+      if (this.router.isActive('/channels', true) || this.router.isActive('/forbidden', true)) {
         navigator['app'].exitApp();
       }
     });
