@@ -29,6 +29,10 @@
     <ion-list>
       <ion-item button *ngFor="let channel of channels"
         [routerLink]="['/channels', channel.id]">
+        <ion-thumbnail slot="start">
+          <img [src]="channel.logo ? channel.logo.url() :
+            'assets/img/cover.png'">
+        </ion-thumbnail>
         <ion-label>{{ channel.name }}</ion-label>
       </ion-item>
     </ion-list>
