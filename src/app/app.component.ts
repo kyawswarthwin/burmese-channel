@@ -30,14 +30,15 @@ export class AppComponent {
       this.insomnia.keepAwake();
       this.appUpdate.checkAppUpdate(environment.updateUrl);
       this.parse.initialize(environment.parseConfig);
-    });
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        if (event.urlAfterRedirects === '/channels' || event.urlAfterRedirects === '/forbidden') {
-          this.splashScreen.hide();
+      this.router.events.subscribe(event => {
+        if (event instanceof NavigationEnd) {
+          if (event.urlAfterRedirects === '/channels' || event.urlAfterRedirects === '/forbidden') {
+            this.splashScreen.hide();
+          }
         }
-      }
+      });
     });
+
     this.platform.backButton.subscribe(() => {
       if (this.router.isActive('/channels', true) || this.router.isActive('/forbidden', true)) {
         navigator['app'].exitApp();
