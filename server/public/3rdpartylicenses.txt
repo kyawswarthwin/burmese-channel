@@ -85,6 +85,9 @@ MIT
 @ionic-native/status-bar
 MIT
 
+@ionic-native/toast
+MIT
+
 @ionic/angular
 MIT
 
