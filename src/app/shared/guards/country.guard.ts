@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import * as Parse from 'parse';
 
 import { environment } from 'src/environments/environment';
@@ -8,7 +9,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class CountryGuard implements CanActivate {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private toastCtrl: ToastController) {}
 
   async canActivate(): Promise<boolean> {
     if (environment.production) {
@@ -19,7 +20,14 @@ export class CountryGuard implements CanActivate {
         }
         return countrySupported;
       } catch (error) {
-        navigator['app'].exitApp();
+        const toast = await this.toastCtrl.create({
+          message: 'No Connection Available',
+          duration: 2000
+        });
+        toast.onDidDismiss().then(() => {
+          navigator['app'].exitApp();
+        });
+        toast.present();
       }
     } else {
       return true;
