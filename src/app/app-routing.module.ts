@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { CountryGuard } from './shared/guards/country.guard';
+
 const routes: Routes = [
   {
     path: 'channels',
-    loadChildren: './pages/channels/channels.module#ChannelsPageModule'
+    loadChildren: './pages/channels/channels.module#ChannelsPageModule',
+    canActivate: [CountryGuard]
   },
   {
     path: '',
