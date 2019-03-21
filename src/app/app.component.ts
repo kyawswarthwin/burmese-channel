@@ -33,7 +33,7 @@ export class AppComponent {
     });
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        if (event.url === '/channels' || event.url === '/forbidden') {
+        if (event.urlAfterRedirects === '/channels' || event.urlAfterRedirects === '/forbidden') {
           this.splashScreen.hide();
         }
       }
