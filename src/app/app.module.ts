@@ -8,6 +8,7 @@ import { AppUpdate } from '@ionic-native/app-update/ngx';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Insomnia } from '@ionic-native/insomnia/ngx';
+import { Toast } from '@ionic-native/toast/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -22,6 +23,7 @@ import { AppRoutingModule } from './app-routing.module';
     AndroidFullScreen,
     ScreenOrientation,
     Insomnia,
+    Toast,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
