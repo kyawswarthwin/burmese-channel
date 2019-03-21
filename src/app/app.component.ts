@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { AppUpdate } from '@ionic-native/app-update/ngx';
@@ -30,7 +30,13 @@ export class AppComponent {
       this.insomnia.keepAwake();
       this.appUpdate.checkAppUpdate(environment.updateUrl);
       this.parse.initialize(environment.parseConfig);
-      this.splashScreen.hide();
+    });
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (event.url === '/channels' || event.url === '/forbidden') {
+          this.splashScreen.hide();
+        }
+      }
     });
     this.platform.backButton.subscribe(() => {
       if (this.router.isActive('/channels', true) || this.router.isActive('/forbidden', true)) {
