@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -12,6 +12,8 @@ import { Toast } from '@ionic-native/toast/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { environment } from 'src/environments/environment';
+import { ParseService } from './shared/services/parse.service';
 
 @NgModule({
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
@@ -24,7 +26,20 @@ import { AppRoutingModule } from './app-routing.module';
     ScreenOrientation,
     Insomnia,
     Toast,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (parse: ParseService) => {
+        return () => {
+          return new Promise((resolve, reject) => {
+            parse.initialize(environment.parseConfig);
+            resolve();
+          });
+        };
+      },
+      deps: [ParseService],
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

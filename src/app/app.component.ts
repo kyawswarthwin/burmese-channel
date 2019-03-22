@@ -6,7 +6,6 @@ import { AppUpdate } from '@ionic-native/app-update/ngx';
 import { Insomnia } from '@ionic-native/insomnia/ngx';
 
 import { environment } from 'src/environments/environment';
-import { ParseService } from './shared/services/parse.service';
 
 @Component({
   selector: 'app-root',
@@ -19,8 +18,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private router: Router,
     private appUpdate: AppUpdate,
-    private insomnia: Insomnia,
-    private parse: ParseService
+    private insomnia: Insomnia
   ) {
     this.initializeApp();
   }
@@ -29,7 +27,6 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.insomnia.keepAwake();
       this.appUpdate.checkAppUpdate(environment.updateUrl);
-      this.parse.initialize(environment.parseConfig);
       this.router.events.subscribe(event => {
         if (event instanceof NavigationEnd) {
           if (event.urlAfterRedirects === '/channels' || event.urlAfterRedirects === '/forbidden') {
