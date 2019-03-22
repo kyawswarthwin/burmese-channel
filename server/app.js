@@ -100,6 +100,34 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(mountPath, api);
 app.use('/dashboard', dashboard);
 
+app.get('/channels/mrtv.m3u8', async (req, res) => {
+  try {
+    const response = await Parse.Cloud.httpRequest({
+      url:
+        'https://player-api.new.livestream.com/accounts/15604755/events/4419934/broadcasts/189035634.secure.m3u8'
+    });
+    res.redirect(response.headers.location);
+  } catch (error) {
+    res.status(500).json({
+      error: 'Internal Server Error'
+    });
+  }
+});
+
+app.get('/channels/myanmar_international.m3u8', async (req, res) => {
+  try {
+    const response = await Parse.Cloud.httpRequest({
+      url:
+        'https://player-api.new.livestream.com/accounts/7063221/events/2739096/broadcasts/189035656.secure.m3u8'
+    });
+    res.redirect(response.headers.location);
+  } catch (error) {
+    res.status(500).json({
+      error: 'Internal Server Error'
+    });
+  }
+});
+
 const server = http.createServer(app);
 server.listen(port, () => {
   console.log(`Server running on port ${port}.`);
