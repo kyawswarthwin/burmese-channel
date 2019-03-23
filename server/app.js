@@ -104,7 +104,7 @@ app.get('/channels/mrtv.m3u8', async (req, res) => {
   try {
     const response = await Parse.Cloud.httpRequest({
       url:
-        'https://player-api.new.livestream.com/accounts/15604755/events/4419934/broadcasts/189035634.secure.m3u8'
+        'http://api.new.livestream.com/accounts/15604755/events/4419934/broadcasts/189035634.m3u8'
     });
     res.redirect(response.headers.location);
   } catch (error) {
@@ -117,8 +117,7 @@ app.get('/channels/mrtv.m3u8', async (req, res) => {
 app.get('/channels/myanmar_international.m3u8', async (req, res) => {
   try {
     const response = await Parse.Cloud.httpRequest({
-      url:
-        'https://player-api.new.livestream.com/accounts/7063221/events/2739096/broadcasts/189035656.secure.m3u8'
+      url: 'http://api.new.livestream.com/accounts/7063221/events/2739096/broadcasts/189049876.m3u8'
     });
     res.redirect(response.headers.location);
   } catch (error) {
