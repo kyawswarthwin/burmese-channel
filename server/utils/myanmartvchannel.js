@@ -13,7 +13,8 @@ function getM3u8(url) {
         .split('/')
         .slice(0, -1)
         .join('/');
-      resolve(response.text.replace(/(.*.m3u8)/g, `${baseUrl}/$1`));
+      const m3u8 = response.text.replace(/(.*.m3u8)/g, `${baseUrl}/$1`);
+      resolve(m3u8);
     } catch (error) {
       reject(error);
     }
