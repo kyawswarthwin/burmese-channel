@@ -2,13 +2,18 @@
 
 const cheerio = require('cheerio');
 
-function getM3u8Url(url) {
+function getM3u8(url) {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await Parse.Cloud.httpRequest({ url: url });
+      let response = await Parse.Cloud.httpRequest({ url: url });
       const $ = cheerio.load(response.text);
       const m3u8Url = $('video source').attr('src');
-      resolve(m3u8Url);
+      response = await Parse.Cloud.httpRequest({ url: m3u8Url });
+      const baseUrl = m3u8Url
+        .split('/')
+        .slice(0, -1)
+        .join('/');
+      resolve(response.text.replace(/(.*.m3u8)/g, `${baseUrl}/$1`));
     } catch (error) {
       reject(error);
     }
@@ -16,5 +21,5 @@ function getM3u8Url(url) {
 }
 
 module.exports = {
-  getM3u8Url
+  getM3u8
 };

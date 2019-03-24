@@ -126,10 +126,10 @@ app.get('/channels/myanmar_international.m3u8', async (req, res) => {
 
 app.get('/channels/5_plus.m3u8', async (req, res) => {
   try {
-    const url = await myanmartvchannel.getM3u8Url(
+    const m3u8 = await myanmartvchannel.getM3u8(
       'http://www.myanmartvchannel.com/5-plus-channel.html'
     );
-    res.redirect(url);
+    res.send(m3u8);
   } catch (error) {
     res.status(500).json({
       error: 'Internal Server Error'
@@ -139,10 +139,10 @@ app.get('/channels/5_plus.m3u8', async (req, res) => {
 
 app.get('/channels/mrtv_entertainment.m3u8', async (req, res) => {
   try {
-    const url = await myanmartvchannel.getM3u8Url(
+    const m3u8 = await myanmartvchannel.getM3u8(
       'http://www.myanmartvchannel.com/mrtv-entertainment.html'
     );
-    res.redirect(url);
+    res.send(m3u8);
   } catch (error) {
     res.status(500).json({
       error: 'Internal Server Error'
