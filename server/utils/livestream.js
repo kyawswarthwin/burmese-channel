@@ -9,7 +9,8 @@ function getM3u8Url(account_id, event_id) {
       response = await Parse.Cloud.httpRequest({
         url: response.data.m3u8_url
       });
-      resolve(response.headers.location);
+      const m3u8Url = response.headers.location;
+      resolve(m3u8Url);
     } catch (error) {
       reject(error);
     }

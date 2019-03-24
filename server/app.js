@@ -10,6 +10,7 @@ const { ParseServer } = require('parse-server');
 const ParseDashboard = require('parse-dashboard');
 const path = require('path');
 const livestream = require('./utils/livestream');
+const myanmartvchannel = require('./utils/myanmartvchannel');
 
 const app = express();
 
@@ -115,6 +116,32 @@ app.get('/channels/mrtv.m3u8', async (req, res) => {
 app.get('/channels/myanmar_international.m3u8', async (req, res) => {
   try {
     const url = await livestream.getM3u8Url('7063221', '2739096');
+    res.redirect(url);
+  } catch (error) {
+    res.status(500).json({
+      error: 'Internal Server Error'
+    });
+  }
+});
+
+app.get('/channels/5_plus.m3u8', async (req, res) => {
+  try {
+    const url = await myanmartvchannel.getM3u8Url(
+      'http://www.myanmartvchannel.com/5-plus-channel.html'
+    );
+    res.redirect(url);
+  } catch (error) {
+    res.status(500).json({
+      error: 'Internal Server Error'
+    });
+  }
+});
+
+app.get('/channels/mrtv_entertainment.m3u8', async (req, res) => {
+  try {
+    const url = await myanmartvchannel.getM3u8Url(
+      'http://www.myanmartvchannel.com/mrtv-entertainment.html'
+    );
     res.redirect(url);
   } catch (error) {
     res.status(500).json({
