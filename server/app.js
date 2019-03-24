@@ -9,6 +9,7 @@ const cors = require('cors');
 const { ParseServer } = require('parse-server');
 const ParseDashboard = require('parse-dashboard');
 const path = require('path');
+const livestream = require('./utils/livestream');
 
 const app = express();
 
@@ -102,7 +103,7 @@ app.use('/dashboard', dashboard);
 
 app.get('/channels/mrtv.m3u8', async (req, res) => {
   try {
-    const url = await getM3u8Url('15604755', '4419934');
+    const url = await livestream.getM3u8Url('15604755', '4419934');
     res.redirect(url);
   } catch (error) {
     res.status(500).json({
@@ -113,7 +114,7 @@ app.get('/channels/mrtv.m3u8', async (req, res) => {
 
 app.get('/channels/myanmar_international.m3u8', async (req, res) => {
   try {
-    const url = await getM3u8Url('7063221', '2739096');
+    const url = await livestream.getM3u8Url('7063221', '2739096');
     res.redirect(url);
   } catch (error) {
     res.status(500).json({
@@ -127,19 +128,3 @@ server.listen(port, () => {
   console.log(`Server running on port ${port}.`);
 });
 ParseServer.createLiveQueryServer(server);
-
-function getM3u8Url(account_id, event_id) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let response = await Parse.Cloud.httpRequest({
-        url: `https://api.new.livestream.com/accounts/${account_id}/events/${event_id}/stream_info`
-      });
-      response = await Parse.Cloud.httpRequest({
-        url: response.data.m3u8_url
-      });
-      resolve(response.headers.location);
-    } catch (error) {
-      reject(error);
-    }
-  });
-}
