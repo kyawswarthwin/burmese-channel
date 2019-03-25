@@ -3,9 +3,10 @@ sudo dokku plugin:install https://github.com/dokku/dokku-mongo.git mongo
 dokku mongo:create burmesechannel
 dokku mongo:link burmesechannel burmesechannel
 dokku config:set burmesechannel APP_ID=2d5e6700-231d-4dc1-9baf-54661e6200b3 MASTER_KEY=e7429703-e8d1-4bb3-bd9c-a2a98b5e2ff2 SERVER_URL=https://www.burmesechannel.com/parse PARSE_DASHBOARD_USER_ID=admin PARSE_DASHBOARD_USER_PASSWORD=880e0d76
+sudo dokku plugin:install https://github.com/F4-Group/dokku-apt
 git init
 git add -A
 git commit -m "first commit"
-git remote add dokku dokku@68.183.179.155:burmesechannel
+git remote add dokku dokku@128.199.83.218:burmesechannel
 git push dokku master
 dokku domains:add burmesechannel burmesechannel.com www.burmesechannel.com
