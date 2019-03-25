@@ -1,14 +1,27 @@
 'use strict';
 
-const cheerio = require('cheerio');
+const puppeteer = require('puppeteer');
+
+function getM3u8Url(url) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const browser = await puppeteer.launch();
+      const page = await browser.newPage();
+      await page.goto(url);
+      const m3u8Url = await page.evaluate(() => document.querySelector('video source').src);
+      await browser.close();
+      resolve(m3u8Url);
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
 
 function getM3u8(url) {
   return new Promise(async (resolve, reject) => {
     try {
-      let response = await Parse.Cloud.httpRequest({ url: url });
-      const $ = cheerio.load(response.text);
-      const m3u8Url = $('video source').attr('src');
-      response = await Parse.Cloud.httpRequest({ url: m3u8Url });
+      const m3u8Url = await getM3u8Url(url);
+      const response = await Parse.Cloud.httpRequest({ url: m3u8Url });
       const baseUrl = m3u8Url
         .split('/')
         .slice(0, -1)
@@ -22,5 +35,6 @@ function getM3u8(url) {
 }
 
 module.exports = {
+  getM3u8Url,
   getM3u8
 };
