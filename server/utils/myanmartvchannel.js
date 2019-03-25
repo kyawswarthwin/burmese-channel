@@ -10,7 +10,9 @@ function getM3u8Url(url) {
       });
       const page = await browser.newPage();
       await page.goto(url);
-      const m3u8Url = await page.evaluate(() => document.querySelector('video source').src);
+      const m3u8Url = await page.evaluate(
+        () => document.querySelector('div.mobileonly video source').src
+      );
       await browser.close();
       resolve(m3u8Url);
     } catch (error) {
