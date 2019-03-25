@@ -9,6 +9,10 @@ const cors = require('cors');
 const { ParseServer } = require('parse-server');
 const ParseDashboard = require('parse-dashboard');
 const path = require('path');
+const redis = require('redis');
+const { promisify } = require('util');
+const network = require('./utils/network');
+const hls = require('./utils/hls');
 const livestream = require('./utils/livestream');
 const myanmartvchannel = require('./utils/myanmartvchannel');
 
@@ -102,6 +106,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(mountPath, api);
 app.use('/dashboard', dashboard);
 
+const client = redis.createClient(process.env.REDIS_URL);
+const getAsync = promisify(client.get).bind(client);
+const setAsync = promisify(client.set).bind(client);
+
 app.get('/channels/mrtv.m3u8', async (req, res) => {
   try {
     const url = await livestream.getM3u8Url('15604755', '4419934');
@@ -126,9 +134,16 @@ app.get('/channels/mitv.m3u8', async (req, res) => {
 
 app.get('/channels/5_plus.m3u8', async (req, res) => {
   try {
-    const m3u8 = await myanmartvchannel.getM3u8(
-      'http://www.myanmartvchannel.com/5-plus-channel.html'
-    );
+    let url = await getAsync('5_plus_url');
+    let m3u8 = await getAsync('5_plus_m3u8');
+    if (!(url && (await network.checkUrlAlive(url)))) {
+      url = await myanmartvchannel.getM3u8Url(
+        'http://www.myanmartvchannel.com/5-plus-channel.html'
+      );
+      await setAsync('5_plus_url', url);
+      m3u8 = await hls.getM3u8(url);
+      await setAsync('5_plus_m3u8', m3u8);
+    }
     res.send(m3u8);
   } catch (error) {
     res.status(500).json({
@@ -139,9 +154,16 @@ app.get('/channels/5_plus.m3u8', async (req, res) => {
 
 app.get('/channels/mrtv_entertainment.m3u8', async (req, res) => {
   try {
-    const m3u8 = await myanmartvchannel.getM3u8(
-      'http://www.myanmartvchannel.com/mrtv-entertainment.html'
-    );
+    let url = await getAsync('mrtv_entertainment_url');
+    let m3u8 = await getAsync('mrtv_entertainment_m3u8');
+    if (!(url && (await network.checkUrlAlive(url)))) {
+      url = await myanmartvchannel.getM3u8Url(
+        'http://www.myanmartvchannel.com/mrtv-entertainment.html'
+      );
+      await setAsync('mrtv_entertainment_url', url);
+      m3u8 = await hls.getM3u8(url);
+      await setAsync('mrtv_entertainment_m3u8', m3u8);
+    }
     res.send(m3u8);
   } catch (error) {
     res.status(500).json({
