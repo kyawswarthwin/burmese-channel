@@ -113,7 +113,7 @@ app.get('/channels/mrtv.m3u8', async (req, res) => {
   }
 });
 
-app.get('/channels/myanmar_international.m3u8', async (req, res) => {
+app.get('/channels/mitv.m3u8', async (req, res) => {
   try {
     const url = await livestream.getM3u8Url('7063221', '2739096');
     res.redirect(url);
