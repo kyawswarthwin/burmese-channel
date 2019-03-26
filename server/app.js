@@ -9,11 +9,6 @@ const cors = require('cors');
 const { ParseServer } = require('parse-server');
 const ParseDashboard = require('parse-dashboard');
 const path = require('path');
-const redis = require('redis');
-const { promisify } = require('util');
-const hls = require('./utils/hls');
-const livestream = require('./utils/livestream');
-const myanmartvchannel = require('./utils/myanmartvchannel');
 
 const app = express();
 
@@ -104,76 +99,6 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(mountPath, api);
 app.use('/dashboard', dashboard);
-
-const client = redis.createClient(process.env.REDIS_URL);
-const getAsync = promisify(client.get).bind(client);
-const setexAsync = promisify(client.setex).bind(client);
-
-app.get('/channels/mrtv.m3u8', async (req, res) => {
-  try {
-    let url = await getAsync('mrtv_url');
-    if (!url) {
-      url = await livestream.getM3u8Url('15604755', '4419934');
-      await setexAsync('mrtv_url', 300, url);
-    }
-    res.redirect(url);
-  } catch (error) {
-    res.status(500).json({
-      error: 'Internal Server Error'
-    });
-  }
-});
-
-app.get('/channels/mitv.m3u8', async (req, res) => {
-  try {
-    let url = await getAsync('mitv_url');
-    if (!url) {
-      url = await livestream.getM3u8Url('7063221', '2739096');
-      await setexAsync('mitv_url', 300, url);
-    }
-    res.redirect(url);
-  } catch (error) {
-    res.status(500).json({
-      error: 'Internal Server Error'
-    });
-  }
-});
-
-app.get('/channels/5_plus.m3u8', async (req, res) => {
-  try {
-    let m3u8 = await getAsync('5_plus_m3u8');
-    if (!m3u8) {
-      const url = await myanmartvchannel.getM3u8Url(
-        'http://www.myanmartvchannel.com/5-plus-channel.html'
-      );
-      m3u8 = await hls.getM3u8(url);
-      await setexAsync('5_plus_m3u8', 300, m3u8);
-    }
-    res.send(m3u8);
-  } catch (error) {
-    res.status(500).json({
-      error: 'Internal Server Error'
-    });
-  }
-});
-
-app.get('/channels/mrtv_entertainment.m3u8', async (req, res) => {
-  try {
-    let m3u8 = await getAsync('mrtv_entertainment_m3u8');
-    if (!m3u8) {
-      const url = await myanmartvchannel.getM3u8Url(
-        'http://www.myanmartvchannel.com/mrtv-entertainment.html'
-      );
-      m3u8 = await hls.getM3u8(url);
-      await setexAsync('mrtv_entertainment_m3u8', 300, m3u8);
-    }
-    res.send(m3u8);
-  } catch (error) {
-    res.status(500).json({
-      error: 'Internal Server Error'
-    });
-  }
-});
 
 const server = http.createServer(app);
 server.listen(port, async () => {
