@@ -141,10 +141,14 @@ app.get('/channels/mitv.m3u8', async (req, res) => {
 
 app.get('/channels/5_plus.m3u8', async (req, res) => {
   try {
-    const url = await myanmartvchannel.getM3u8Url(
-      'http://www.myanmartvchannel.com/5-plus-channel.html'
-    );
-    const m3u8 = await hls.getM3u8(url);
+    let m3u8 = await getAsync('5_plus_m3u8');
+    if (!m3u8) {
+      const url = await myanmartvchannel.getM3u8Url(
+        'http://www.myanmartvchannel.com/5-plus-channel.html'
+      );
+      m3u8 = await hls.getM3u8(url);
+      await setexAsync('5_plus_m3u8', 300, m3u8);
+    }
     res.send(m3u8);
   } catch (error) {
     res.status(500).json({
@@ -155,10 +159,14 @@ app.get('/channels/5_plus.m3u8', async (req, res) => {
 
 app.get('/channels/mrtv_entertainment.m3u8', async (req, res) => {
   try {
-    const url = await myanmartvchannel.getM3u8Url(
-      'http://www.myanmartvchannel.com/mrtv-entertainment.html'
-    );
-    const m3u8 = await hls.getM3u8(url);
+    let m3u8 = await getAsync('mrtv_entertainment_m3u8');
+    if (!m3u8) {
+      const url = await myanmartvchannel.getM3u8Url(
+        'http://www.myanmartvchannel.com/mrtv-entertainment.html'
+      );
+      m3u8 = await hls.getM3u8(url);
+      await setexAsync('mrtv_entertainment_m3u8', 300, m3u8);
+    }
     res.send(m3u8);
   } catch (error) {
     res.status(500).json({
