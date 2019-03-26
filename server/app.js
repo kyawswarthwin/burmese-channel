@@ -11,11 +11,9 @@ const ParseDashboard = require('parse-dashboard');
 const path = require('path');
 const redis = require('redis');
 const { promisify } = require('util');
-const network = require('./utils/network');
 const hls = require('./utils/hls');
 const livestream = require('./utils/livestream');
 const myanmartvchannel = require('./utils/myanmartvchannel');
-const zeegwat = require('./utils/zeegwat');
 
 const app = express();
 
@@ -109,11 +107,15 @@ app.use('/dashboard', dashboard);
 
 const client = redis.createClient(process.env.REDIS_URL);
 const getAsync = promisify(client.get).bind(client);
-const setAsync = promisify(client.set).bind(client);
+const setexAsync = promisify(client.setex).bind(client);
 
 app.get('/channels/mrtv.m3u8', async (req, res) => {
   try {
-    const url = await livestream.getM3u8Url('15604755', '4419934');
+    let url = await getAsync('mrtv');
+    if (!url) {
+      url = await livestream.getM3u8Url('15604755', '4419934');
+      setexAsync('mrtv', 300, url);
+    }
     res.redirect(url);
   } catch (error) {
     res.status(500).json({
@@ -124,7 +126,11 @@ app.get('/channels/mrtv.m3u8', async (req, res) => {
 
 app.get('/channels/mitv.m3u8', async (req, res) => {
   try {
-    const url = await livestream.getM3u8Url('7063221', '2739096');
+    let url = await getAsync('mitv');
+    if (!url) {
+      url = await livestream.getM3u8Url('7063221', '2739096');
+      setexAsync('mitv', 300, url);
+    }
     res.redirect(url);
   } catch (error) {
     res.status(500).json({
@@ -152,19 +158,6 @@ app.get('/channels/mrtv_entertainment.m3u8', async (req, res) => {
     const url = await myanmartvchannel.getM3u8Url(
       'http://www.myanmartvchannel.com/mrtv-entertainment.html'
     );
-    const m3u8 = await hls.getM3u8(url);
-    res.send(m3u8);
-  } catch (error) {
-    res.status(500).json({
-      error: 'Internal Server Error'
-    });
-  }
-});
-
-app.get('/channels/zeegwat.m3u8', async (req, res) => {
-  try {
-    const { id } = req.query || {};
-    const url = await zeegwat.getM3u8Url(id);
     const m3u8 = await hls.getM3u8(url);
     res.send(m3u8);
   } catch (error) {
