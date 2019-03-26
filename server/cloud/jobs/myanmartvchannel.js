@@ -17,15 +17,22 @@ const channels = [
 const Channel = Parse.Object.extend('Channel');
 
 async function watchMyanmarTvChannel(request) {
-  await forEach(channels, async ({ name, url }) => {
-    const query = new Parse.Query(Channel);
-    query.equalTo('name', name);
-    const { id } = (await query.first()) || {};
-    url = await myanmartvchannel.getM3u8Url(url);
-    const channel = new Channel();
-    channel.id = id;
-    await channel.save({ name, url });
-  });
+  try {
+    await forEach(channels, async ({ name, url }) => {
+      const query = new Parse.Query(Channel);
+      query.equalTo('name', name);
+      const { id } = (await query.first()) || {};
+      url = await myanmartvchannel.getM3u8Url(url);
+      const channel = new Channel();
+      channel.id = id;
+      await channel.save({ name, url });
+    });
+    setTimeout(() => {
+      watchMyanmarTvChannel(request);
+    }, 300000);
+  } catch (error) {
+    watchMyanmarTvChannel(request);
+  }
 }
 
 module.exports = {

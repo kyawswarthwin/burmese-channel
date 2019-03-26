@@ -19,15 +19,22 @@ const channels = [
 const Channel = Parse.Object.extend('Channel');
 
 async function watchLivestream(request) {
-  await forEach(channels, async ({ name, account_id, event_id }) => {
-    const query = new Parse.Query(Channel);
-    query.equalTo('name', name);
-    const { id } = (await query.first()) || {};
-    const url = await livestream.getM3u8Url(account_id, event_id);
-    const channel = new Channel();
-    channel.id = id;
-    await channel.save({ name, url });
-  });
+  try {
+    await forEach(channels, async ({ name, account_id, event_id }) => {
+      const query = new Parse.Query(Channel);
+      query.equalTo('name', name);
+      const { id } = (await query.first()) || {};
+      const url = await livestream.getM3u8Url(account_id, event_id);
+      const channel = new Channel();
+      channel.id = id;
+      await channel.save({ name, url });
+    });
+    setTimeout(() => {
+      watchLivestream(request);
+    }, 20000);
+  } catch (error) {
+    watchLivestream(request);
+  }
 }
 
 module.exports = {
