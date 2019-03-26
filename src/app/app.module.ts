@@ -2,6 +2,7 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppUpdate } from '@ionic-native/app-update/ngx';
@@ -16,7 +17,7 @@ import { environment } from 'src/environments/environment';
 import { ParseService } from './shared/services/parse.service';
 
 @NgModule({
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule, IonicModule.forRoot(), LazyLoadImageModule, AppRoutingModule],
   declarations: [AppComponent],
   providers: [
     SplashScreen,

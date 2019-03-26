@@ -30,8 +30,9 @@
       <ion-item button *ngFor="let channel of channels"
         [routerLink]="['/channels', channel.id]">
         <ion-thumbnail slot="start">
-          <img [src]="getAssets('img/channels/' + channel.name + '.png') ||
-            'assets/img/cover.png'">
+          <img defaultImage="assets/img/cover.png"
+            [lazyLoad]="getAssets('img/channels/' + channel.name + '.png')"
+            offset="100">
         </ion-thumbnail>
         <ion-label>{{ channel.name }}</ion-label>
       </ion-item>

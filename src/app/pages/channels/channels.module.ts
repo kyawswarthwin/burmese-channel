@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 import { ChannelsPage } from './channels.page';
 import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
@@ -25,6 +26,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    LazyLoadImageModule,
     RouterModule.forChild(routes),
     SharedComponentsModule
   ],
