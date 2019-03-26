@@ -6,9 +6,6 @@ module.exports = {
     name: {
       type: 'String'
     },
-    logo: {
-      type: 'File'
-    },
     url: {
       type: 'String'
     }

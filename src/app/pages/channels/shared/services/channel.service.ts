@@ -43,10 +43,6 @@ export class ChannelService extends Parse.Object {
     return this.get('name');
   }
 
-  get logo(): Parse.File {
-    return this.get('logo');
-  }
-
   get url(): string {
     return this.get('url');
   }

@@ -7,6 +7,8 @@ import {
   PopoverController
 } from '@ionic/angular';
 
+import { environment } from 'src/environments/environment';
+
 export abstract class BasePage implements OnInit, OnDestroy {
   public isLoadingView: boolean;
   public isEmptyView: boolean;
@@ -191,5 +193,9 @@ export abstract class BasePage implements OnInit, OnDestroy {
 
   async closePopover(data?: any): Promise<void> {
     await this.popoverCtrl.dismiss(data);
+  }
+
+  getAssets(path: string): string {
+    return new URL(`/assets/${path}`, environment.parseConfig.serverURL).href;
   }
 }
