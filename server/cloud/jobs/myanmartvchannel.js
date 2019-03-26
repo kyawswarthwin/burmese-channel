@@ -26,9 +26,6 @@ async function watchMyanmarTvChannel(request) {
     channel.id = id;
     await channel.save({ name, url });
   });
-  setTimeout(() => {
-    watchMyanmarTvChannel(request);
-  }, 300000);
 }
 
 module.exports = {
