@@ -1,7 +1,5 @@
 'use strict';
 
-const puppeteer = require('puppeteer');
-
 function getM3u8(url) {
   return new Promise(async (resolve, reject) => {
     try {

@@ -15,6 +15,7 @@ const network = require('./utils/network');
 const hls = require('./utils/hls');
 const livestream = require('./utils/livestream');
 const myanmartvchannel = require('./utils/myanmartvchannel');
+const zeegwat = require('./utils/zeegwat');
 
 const app = express();
 
@@ -164,6 +165,19 @@ app.get('/channels/mrtv_entertainment.m3u8', async (req, res) => {
       m3u8 = await hls.getM3u8(url);
       await setAsync('mrtv_entertainment_m3u8', m3u8);
     }
+    res.send(m3u8);
+  } catch (error) {
+    res.status(500).json({
+      error: 'Internal Server Error'
+    });
+  }
+});
+
+app.get('/channels/zeegwat.m3u8', async (req, res) => {
+  try {
+    const { id } = req.query || {};
+    const url = await zeegwat.getM3u8Url(id);
+    const m3u8 = await hls.getM3u8(url);
     res.send(m3u8);
   } catch (error) {
     res.status(500).json({
