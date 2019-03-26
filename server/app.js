@@ -111,10 +111,10 @@ const setexAsync = promisify(client.setex).bind(client);
 
 app.get('/channels/mrtv.m3u8', async (req, res) => {
   try {
-    let url = await getAsync('mrtv');
+    let url = await getAsync('mrtv_url');
     if (!url) {
       url = await livestream.getM3u8Url('15604755', '4419934');
-      setexAsync('mrtv', 300, url);
+      setexAsync('mrtv_url', 300, url);
     }
     res.redirect(url);
   } catch (error) {
@@ -126,10 +126,10 @@ app.get('/channels/mrtv.m3u8', async (req, res) => {
 
 app.get('/channels/mitv.m3u8', async (req, res) => {
   try {
-    let url = await getAsync('mitv');
+    let url = await getAsync('mitv_url');
     if (!url) {
       url = await livestream.getM3u8Url('7063221', '2739096');
-      setexAsync('mitv', 300, url);
+      setexAsync('mitv_url', 300, url);
     }
     res.redirect(url);
   } catch (error) {
