@@ -7,6 +7,6 @@ dokku config:set burmesechannel APP_ID=2d5e6700-231d-4dc1-9baf-54661e6200b3 MAST
 git init
 git add -A
 git commit -m "first commit"
-git remote add dokku dokku@128.199.83.218:burmesechannel
+git remote add dokku dokku@157.230.47.113:burmesechannel
 git push dokku master
 dokku domains:add burmesechannel burmesechannel.com www.burmesechannel.com
