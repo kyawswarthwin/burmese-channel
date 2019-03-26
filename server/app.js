@@ -114,7 +114,7 @@ app.get('/channels/mrtv.m3u8', async (req, res) => {
     let url = await getAsync('mrtv_url');
     if (!url) {
       url = await livestream.getM3u8Url('15604755', '4419934');
-      setexAsync('mrtv_url', 300, url);
+      await setexAsync('mrtv_url', 300, url);
     }
     res.redirect(url);
   } catch (error) {
@@ -129,7 +129,7 @@ app.get('/channels/mitv.m3u8', async (req, res) => {
     let url = await getAsync('mitv_url');
     if (!url) {
       url = await livestream.getM3u8Url('7063221', '2739096');
-      setexAsync('mitv_url', 300, url);
+      await setexAsync('mitv_url', 300, url);
     }
     res.redirect(url);
   } catch (error) {
