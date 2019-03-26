@@ -29,7 +29,7 @@ async function watchMyanmarTvChannel(request) {
     });
     setTimeout(() => {
       watchMyanmarTvChannel(request);
-    }, 300000);
+    }, 600000);
   } catch (error) {
     watchMyanmarTvChannel(request);
   }

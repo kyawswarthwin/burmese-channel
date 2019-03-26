@@ -31,7 +31,7 @@ async function watchLivestream(request) {
     });
     setTimeout(() => {
       watchLivestream(request);
-    }, 20000);
+    }, 600000);
   } catch (error) {
     watchLivestream(request);
   }
