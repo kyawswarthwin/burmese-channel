@@ -176,7 +176,8 @@ app.get('/channels/mrtv_entertainment.m3u8', async (req, res) => {
 });
 
 const server = http.createServer(app);
-server.listen(port, () => {
+server.listen(port, async () => {
   console.log(`Server running on port ${port}.`);
+  await Parse.Cloud.startJob('watchLivestream');
 });
 ParseServer.createLiveQueryServer(server);
