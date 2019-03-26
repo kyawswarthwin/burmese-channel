@@ -28,7 +28,9 @@ async function watchLivestream(request) {
     channel.id = id;
     await channel.save({ name, url });
   });
-  watchLivestream(request);
+  setTimeout(() => {
+    watchLivestream(request);
+  }, 300000);
 }
 
 module.exports = {
