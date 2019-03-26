@@ -179,5 +179,6 @@ const server = http.createServer(app);
 server.listen(port, async () => {
   console.log(`Server running on port ${port}.`);
   await Parse.Cloud.startJob('watchLivestream');
+  await Parse.Cloud.startJob('watchMyanmarTvChannel');
 });
 ParseServer.createLiveQueryServer(server);
