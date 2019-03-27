@@ -110,9 +110,28 @@ app.get('/channels.m3u8', async (req, res) => {
     const url = channel.get('url');
     res.redirect(url);
   } catch (error) {
-    res.status(500).json({
-      error: 'Internal Server Error'
-    });
+    res.status(500).end();
+  }
+});
+
+app.get('/playlist.m3u8', async (req, res) => {
+  try {
+    const Channel = Parse.Object.extend('Channel');
+    const query = new Parse.Query(Channel);
+    query.ascending('name');
+    const channels = await query.find();
+    let m3u8 = `#EXTM3U
+`;
+    m3u8 += channels
+      .map(channel => {
+        return `#EXTINF:0,${channel.get('name')}
+${channel.get('url')}`;
+      })
+      .join('\n');
+    res.set('Content-Type', 'application/vnd.apple.mpegurl');
+    res.send(m3u8);
+  } catch (error) {
+    res.status(500).end();
   }
 });
 
