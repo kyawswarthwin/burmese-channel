@@ -119,7 +119,7 @@ app.get('/channels.m3u8', async (req, res) => {
 const server = http.createServer(app);
 server.listen(port, async () => {
   console.log(`Server running on port ${port}.`);
-  await Parse.Cloud.startJob('watchLivestream');
-  await Parse.Cloud.startJob('watchMyanmarTvChannel');
+  // await Parse.Cloud.startJob('watchLivestream');
+  // await Parse.Cloud.startJob('watchMyanmarTvChannel');
 });
 ParseServer.createLiveQueryServer(server);
