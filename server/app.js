@@ -100,6 +100,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(mountPath, api);
 app.use('/dashboard', dashboard);
 
+app.get('/channels.m3u8', async (req, res) => {
+  try {
+    const { name } = req.query || {};
+    const Channel = Parse.Object.extend('Channel');
+    const query = new Parse.Query(Channel);
+    query.equalTo('name', name);
+    const channel = await query.first();
+    const url = channel.get('url');
+    res.redirect(url);
+  } catch (error) {
+    res.status(500).json({
+      error: 'Internal Server Error'
+    });
+  }
+});
+
 const server = http.createServer(app);
 server.listen(port, async () => {
   console.log(`Server running on port ${port}.`);
