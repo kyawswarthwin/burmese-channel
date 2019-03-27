@@ -27,13 +27,14 @@ async function watchLivestream(request) {
       const url = await livestream.getM3u8Url(account_id, event_id);
       const channel = new Channel();
       channel.id = id;
-      await channel.save({ name, url });
+      await channel.save({ name, url }, { useMasterKey: true });
     });
+  } catch (error) {
+    console.error(error);
+  } finally {
     setTimeout(() => {
       watchLivestream(request);
     }, 60000);
-  } catch (error) {
-    watchLivestream(request);
   }
 }
 

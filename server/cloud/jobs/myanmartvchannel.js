@@ -25,13 +25,14 @@ async function watchMyanmarTvChannel(request) {
       url = await myanmartvchannel.getM3u8Url(url);
       const channel = new Channel();
       channel.id = id;
-      await channel.save({ name, url });
+      await channel.save({ name, url }, { useMasterKey: true });
     });
+  } catch (error) {
+    console.error(error);
+  } finally {
     setTimeout(() => {
       watchMyanmarTvChannel(request);
     }, 600000);
-  } catch (error) {
-    watchMyanmarTvChannel(request);
   }
 }
 
