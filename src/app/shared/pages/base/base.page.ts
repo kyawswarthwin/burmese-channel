@@ -80,7 +80,11 @@ export abstract class BasePage implements OnInit, OnDestroy {
 
   onRefreshComplete(data?: any): void {
     if (this.refresher) {
+      this.refresher.disabled = true;
       this.refresher.complete();
+      setTimeout(() => {
+        this.refresher.disabled = false;
+      }, 100);
     }
 
     if (this.infiniteScroll) {
