@@ -9,6 +9,7 @@ const cors = require('cors');
 const { ParseServer } = require('parse-server');
 const ParseDashboard = require('parse-dashboard');
 const path = require('path');
+const zeegwat = require('./cloud/utils/zeegwat');
 
 const app = express();
 
@@ -130,6 +131,16 @@ ${channel.get('url')}`;
       .join('\n');
     res.set('Content-Type', 'application/vnd.apple.mpegurl');
     res.send(m3u8);
+  } catch (error) {
+    res.status(500).end();
+  }
+});
+
+app.get('/zeegwat.m3u8', async (req, res) => {
+  try {
+    const { id } = req.query || {};
+    const url = await zeegwat.getM3u8Url(id);
+    res.redirect(url);
   } catch (error) {
     res.status(500).end();
   }
