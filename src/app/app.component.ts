@@ -22,6 +22,10 @@ export class AppComponent {
       {
         items: [
           {
+            label: 'Movies',
+            url: '/movies'
+          },
+          {
             label: 'Live',
             url: '/channels'
           }

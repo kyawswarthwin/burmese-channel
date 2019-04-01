@@ -6,8 +6,13 @@ import { CountryGuard } from './shared/guards/country.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/channels',
+    redirectTo: '/movies',
     pathMatch: 'full'
+  },
+  {
+    path: 'movies',
+    loadChildren: './pages/movies/movies.module#MoviesPageModule',
+    canActivate: [CountryGuard]
   },
   {
     path: 'channels',
