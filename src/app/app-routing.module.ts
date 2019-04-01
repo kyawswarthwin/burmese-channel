@@ -6,7 +6,7 @@ import { CountryGuard } from './shared/guards/country.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/movies',
+    redirectTo: '/movies/movies',
     pathMatch: 'full'
   },
   {
