@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ng-container *ngIf="!showSearchbar">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
       <ion-title>Burmese Channel</ion-title>
       <ion-buttons slot="end">
         <ion-button (click)="(showSearchbar=!showSearchbar) &&

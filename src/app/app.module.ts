@@ -2,6 +2,7 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicSideMenuModule } from 'ionic-side-menu';
 import { ImgFallbackModule } from 'ngx-img-fallback';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -17,7 +18,13 @@ import { environment } from 'src/environments/environment';
 import { ParseService } from './shared/services/parse.service';
 
 @NgModule({
-  imports: [BrowserModule, IonicModule.forRoot(), ImgFallbackModule, AppRoutingModule],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    IonicSideMenuModule,
+    ImgFallbackModule,
+    AppRoutingModule
+  ],
   declarations: [AppComponent],
   providers: [
     SplashScreen,

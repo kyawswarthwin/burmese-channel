@@ -11,3 +11,12 @@
 @import '~@ionic/angular/css/flex-utils.css';
 
 @import '~video.js/src/css/video-js.scss';
+
+.split-pane-visible > .split-pane-side {
+  min-width: 200px !important;
+  max-width: 304px !important;
+}
+
+.list-ios {
+  margin-bottom: 0px;
+}

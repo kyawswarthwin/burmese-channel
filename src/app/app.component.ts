@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { SideMenuOptions } from 'ionic-side-menu';
 import { AppUpdate } from '@ionic-native/app-update/ngx';
 import { Insomnia } from '@ionic-native/insomnia/ngx';
 
@@ -13,6 +14,22 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  options: SideMenuOptions = {
+    header: {
+      background: 'assets/img/side-menu-bg.jpg'
+    },
+    menus: [
+      {
+        items: [
+          {
+            label: 'Live',
+            url: '/channels'
+          }
+        ]
+      }
+    ]
+  };
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
