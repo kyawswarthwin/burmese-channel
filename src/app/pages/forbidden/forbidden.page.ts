@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-forbidden',
@@ -6,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./forbidden.page.scss']
 })
 export class ForbiddenPage implements OnInit {
-  constructor() {}
+  constructor(private menuCtrl: MenuController) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.menuCtrl.enable(false);
+  }
 }
