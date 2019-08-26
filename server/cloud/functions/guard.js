@@ -5,8 +5,12 @@ function isCountrySupported(request) {
     try {
       const supportedCountries = (await Parse.Config.get()).get('supportedCountries') || [];
       const country = request.headers['cf-ipcountry'];
-      const countrySupported = supportedCountries.includes(country);
-      resolve(countrySupported);
+      if (supportedCountries.length > 0 && country) {
+        const countrySupported = supportedCountries.includes(country);
+        resolve(countrySupported);
+      } else {
+        resolve(true);
+      }
     } catch (error) {
       reject(error);
     }
