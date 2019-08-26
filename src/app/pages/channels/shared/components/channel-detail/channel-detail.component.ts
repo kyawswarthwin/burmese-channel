@@ -1,4 +1,4 @@
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 
 import { BasePage } from 'src/app/shared/pages/base/base.page';
 import { ChannelService as Channel } from '../../services/channel.service';
@@ -8,7 +8,7 @@ import { ChannelService as Channel } from '../../services/channel.service';
   templateUrl: './channel-detail.component.html',
   styleUrls: ['./channel-detail.component.scss']
 })
-export class ChannelDetailComponent extends BasePage {
+export class ChannelDetailComponent extends BasePage implements OnInit {
   channel: Channel;
 
   constructor(public injector: Injector) {

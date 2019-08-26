@@ -1,4 +1,4 @@
-import { Component, Injector, ViewChild } from '@angular/core';
+import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { IonSearchbar } from '@ionic/angular';
 
 import { BasePage } from 'src/app/shared/pages/base/base.page';
@@ -10,7 +10,7 @@ import { SortComponent } from 'src/app/shared/components/sort/sort.component';
   templateUrl: './channels.page.html',
   styleUrls: ['./channels.page.scss']
 })
-export class ChannelsPage extends BasePage {
+export class ChannelsPage extends BasePage implements OnInit {
   @ViewChild(IonSearchbar, { static: false }) searchbar: IonSearchbar;
 
   params: any = {};

@@ -1,4 +1,4 @@
-import { Injector, OnInit, OnDestroy } from '@angular/core';
+import { Injector } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {
   LoadingController,
@@ -9,7 +9,7 @@ import {
 
 import { environment } from 'src/environments/environment';
 
-export abstract class BasePage implements OnInit, OnDestroy {
+export abstract class BasePage {
   public isLoadingView: boolean;
   public isEmptyView: boolean;
   public isContentView: boolean;
@@ -34,10 +34,6 @@ export abstract class BasePage implements OnInit, OnDestroy {
     this.modalCtrl = injector.get(ModalController);
     this.popoverCtrl = injector.get(PopoverController);
   }
-
-  ngOnInit(): void {}
-
-  ngOnDestroy(): void {}
 
   async showLoadingView(message?: string): Promise<void> {
     this.isLoadingView = true;
