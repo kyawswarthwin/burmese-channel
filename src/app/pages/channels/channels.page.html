@@ -6,8 +6,7 @@
       </ion-buttons>
       <ion-title>Burmese Channel</ion-title>
       <ion-buttons slot="end">
-        <ion-button (click)="(showSearchbar=!showSearchbar) &&
-          focusSearchbar()">
+        <ion-button (click)="(showSearchbar = !showSearchbar) && focusSearchbar()">
           <ion-icon slot="icon-only" name="search"></ion-icon>
         </ion-button>
         <ion-button (click)="onSort($event)">
@@ -15,9 +14,14 @@
         </ion-button>
       </ion-buttons>
     </ng-container>
-    <ion-searchbar *ngIf="showSearchbar" [(ngModel)]="params.search"
-      showCancelButton (ionCancel)="showSearchbar=false"
-      (ionClear)="onClearSearch()" (keyup.enter)="onSearch()"></ion-searchbar>
+    <ion-searchbar
+      *ngIf="showSearchbar"
+      [(ngModel)]="params.search"
+      showCancelButton
+      (ionCancel)="showSearchbar = false"
+      (ionClear)="onClearSearch()"
+      (keyup.enter)="onSearch()"
+    ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
@@ -25,16 +29,20 @@
   <ion-refresher slot="fixed" (ionRefresh)="onReload($event)">
     <ion-refresher-content refreshingSpinner="crescent"></ion-refresher-content>
   </ion-refresher>
-  <app-message-view *ngIf="isErrorView" icon="wifi" message="No Connection
-    Available"></app-message-view>
+  <app-message-view
+    *ngIf="isErrorView"
+    icon="wifi"
+    message="No Connection Available"
+  ></app-message-view>
   <app-message-view *ngIf="isEmptyView" icon="sad" message="No Data Found"></app-message-view>
   <ng-container *ngIf="isContentView">
     <ion-list>
-      <ion-item button *ngFor="let channel of channels"
-        [routerLink]="['/channels', channel.id]">
+      <ion-item button *ngFor="let channel of channels" [routerLink]="['/channels', channel.id]">
         <ion-thumbnail slot="start">
-          <img [src]="getAssets('img/channels/' + channel.name + '.png')"
-            src-fallback="assets/img/cover.png">
+          <img
+            [src]="getAssets('img/channels/' + channel.name + '.png')"
+            src-fallback="assets/img/cover.png"
+          />
         </ion-thumbnail>
         <ion-label>{{ channel.name }}</ion-label>
       </ion-item>

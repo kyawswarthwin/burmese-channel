@@ -8,9 +8,16 @@
 </ion-header>
 
 <ion-content>
-  <app-message-view *ngIf="isErrorView" icon="wifi" message="No Connection
-    Available"></app-message-view>
+  <app-message-view
+    *ngIf="isErrorView"
+    icon="wifi"
+    message="No Connection Available"
+  ></app-message-view>
   <app-message-view *ngIf="isEmptyView" icon="sad" message="No Data Found"></app-message-view>
-  <app-video *ngIf="isContentView" [src]="channel.url"
-    [poster]="getAssets('img/channels/' + channel.name + '.png')" autoplay></app-video>
+  <app-video
+    *ngIf="isContentView"
+    [src]="channel.url"
+    [poster]="getAssets('img/channels/' + channel.name + '.png')"
+    autoplay
+  ></app-video>
 </ion-content>
