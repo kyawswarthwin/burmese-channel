@@ -45,7 +45,10 @@ export class AppComponent {
       this.insomnia.keepAwake();
       this.router.events.subscribe(event => {
         if (event instanceof NavigationEnd) {
-          if (event.urlAfterRedirects === '/channels' || event.urlAfterRedirects === '/forbidden') {
+          if (
+            event.urlAfterRedirects === '/movies/movies' ||
+            event.urlAfterRedirects === '/forbidden'
+          ) {
             this.splashScreen.hide();
           }
         }
