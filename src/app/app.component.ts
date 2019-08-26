@@ -56,9 +56,13 @@ export class AppComponent {
     });
 
     this.platform.backButton.subscribe(() => {
-      if (this.router.isActive('/channels', true) || this.router.isActive('/forbidden', true)) {
-        navigator['app'].exitApp();
-      }
+      ['/movies/movies', '/movies/genres', '/movies/years', '/channels', '/forbidden'].forEach(
+        value => {
+          if (this.router.isActive(value, true)) {
+            navigator['app'].exitApp();
+          }
+        }
+      );
     });
   }
 }
