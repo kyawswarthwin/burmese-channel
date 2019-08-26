@@ -3,10 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { SideMenuOptions } from 'ionic-side-menu';
-import { AppUpdate } from '@ionic-native/app-update/ngx';
 import { Insomnia } from '@ionic-native/insomnia/ngx';
-
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -38,7 +35,6 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private router: Router,
-    private appUpdate: AppUpdate,
     private insomnia: Insomnia
   ) {
     this.initializeApp();
@@ -47,7 +43,6 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.insomnia.keepAwake();
-      this.appUpdate.checkAppUpdate(environment.updateUrl);
       this.router.events.subscribe(event => {
         if (event instanceof NavigationEnd) {
           if (event.urlAfterRedirects === '/channels' || event.urlAfterRedirects === '/forbidden') {

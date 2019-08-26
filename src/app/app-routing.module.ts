@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 
 import { CountryGuard } from './shared/guards/country.guard';
 
@@ -11,24 +11,25 @@ const routes: Routes = [
   },
   {
     path: 'movies',
-    loadChildren: './pages/movies/movies.module#MoviesPageModule',
+    loadChildren: () => import('./pages/movies/movies.module').then(m => m.MoviesPageModule),
     canActivate: [CountryGuard]
   },
   {
     path: 'channels',
-    loadChildren: './pages/channels/channels.module#ChannelsPageModule',
+    loadChildren: () => import('./pages/channels/channels.module').then(m => m.ChannelsPageModule),
     canActivate: [CountryGuard]
   },
   {
     path: 'forbidden',
-    loadChildren: './pages/forbidden/forbidden.module#ForbiddenPageModule'
+    loadChildren: () =>
+      import('./pages/forbidden/forbidden.module').then(m => m.ForbiddenPageModule)
   }
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-      useHash: true
+      preloadingStrategy: PreloadAllModules
     })
   ],
   exports: [RouterModule]

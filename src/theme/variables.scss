@@ -84,15 +84,9 @@
   --ion-toolbar-color-activated: #fff;
   --ion-toolbar-color-unchecked: rgba(255, 255, 255, 0.6);
   --ion-toolbar-color-checked: #fff;
-  // iOS Bugfix
-  ion-toolbar {
-    ion-button,
-    ion-back-button {
-      --color: #fff;
-    }
-    ion-searchbar {
-      --cancel-button-color: #fff;
-    }
+  // iOS
+  ion-searchbar {
+    --cancel-button-color: #fff;
   }
 
   ion-spinner,

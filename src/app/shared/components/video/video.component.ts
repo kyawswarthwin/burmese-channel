@@ -11,7 +11,7 @@ import 'videojs-playlist';
   styleUrls: ['./video.component.scss']
 })
 export class VideoComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('video') video: ElementRef;
+  @ViewChild('video', { static: true }) video: ElementRef;
   @Input() src: any;
   @Input() poster: string;
   @Input() playlist: any[];

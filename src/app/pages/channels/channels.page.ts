@@ -11,7 +11,7 @@ import { SortComponent } from 'src/app/shared/components/sort/sort.component';
   styleUrls: ['./channels.page.scss']
 })
 export class ChannelsPage extends BasePage {
-  @ViewChild(IonSearchbar) searchbar: IonSearchbar;
+  @ViewChild(IonSearchbar, { static: false }) searchbar: IonSearchbar;
 
   params: any = {};
   channels: Channel[];
