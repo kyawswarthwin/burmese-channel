@@ -21,7 +21,7 @@ module.exports = {
     },
     {
       name: 'Channel K',
-      url: 'http://172.104.60.242/live/livestream.m3u8'
+      url: 'https://www.channelkmyanmar.tk/live/livestream.m3u8'
     },
     {
       name: 'MRTV',
