@@ -27,7 +27,7 @@
     "express": "^4.17.1",
     "p-iteration": "^1.1.8",
     "parse-dashboard": "^1.4.3",
-    "parse-server": "^3.8.0",
+    "parse-server": "^4.10.12",
     "parse-server-addon-cloud-class": "^1.1.1",
     "puppeteer": "^1.19.0",
     "response-time": "^2.3.2",
